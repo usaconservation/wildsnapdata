@@ -19,6 +19,7 @@ var api = new ParseServer({
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
   serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
   filesAdapter: s3adapter,
+  fileKey: process.env.PARSE_FILE_KEY,
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
@@ -53,15 +54,12 @@ httpServer.listen(port, function() {
     console.log('parse-server-example running on port ' + port + '.');
 });
 
-var s3Adapter = new S3Adapter(
+var s3Adapter = new S3Adapter (
     {
-    accessKey: process.env.S3_ACCESS_KEY || 'accessKey',
-    secretKey: process.env.S3_SECRET_KEY || 'secretKey',
-    bucket: process.env.S3_BUCKET || 'bucket', {
-    region: process.evn.S3_REGION || 'us-west-2'
-    }
-    directAccess: true
-    }
+    "S3_ACCESS_KEY",
+    "S3_SECRET_KEY",
+    "S3_BUCKET",
+    { directAccess: true }
  );
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
