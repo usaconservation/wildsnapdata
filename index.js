@@ -5,15 +5,23 @@ var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 var S3Adapter = require('parse-server').S3Adapter;
+var s3Adapter = new S3Adapter(
+    "S3_ACCESS_KEY",
+    "S3_SECRET_KEY",
+    "S3_BUCKET",
+    { directAccess: true }
+);
 
-var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
+// var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
+var databaseUri = process.env.DATABASE_URI;
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  // databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  databaseURI: databaseUri,
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
@@ -54,13 +62,6 @@ httpServer.listen(port, function() {
     console.log('parse-server-example running on port ' + port + '.');
 });
 
-var S3Adapter = require('parse-server').S3Adapter;
-var s3Adapter = new S3Adapter(
-    "S3_ACCESS_KEY",
-    "S3_SECRET_KEY",
-    "S3_BUCKET",
-    { directAccess: true }
-);
 
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
