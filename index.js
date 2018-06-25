@@ -4,13 +4,13 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
-var S3Adapter = require('parse-server').S3Adapter;
-var s3Adapter = new S3Adapter(
-    "S3_ACCESS_KEY",
-    "S3_SECRET_KEY",
-    "S3_BUCKET",
-    { directAccess: true }
-);
+
+// Setup the S3 Adapter
+var S3Adapter = require('@parse/s3-files-adapter');
+var s3Adapter = new S3Adapter("S3_ACCESS_KEY",
+                  "S3_SECRET_KEY",
+                  "S3_BUCKET"
+                );
 
 // var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 var databaseUri = process.env.DATABASE_URI;
