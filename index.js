@@ -7,9 +7,9 @@ var path = require('path');
 
 // Setup the S3 Adapter
 var S3Adapter = require('@parse/s3-files-adapter');
-var s3Adapter = new S3Adapter("S3_ACCESS_KEY",
-                  "S3_SECRET_KEY",
-                  "S3_BUCKET"
+var s3Adapter = new S3Adapter(process.env.S3_ACCESS_KEY,
+                  process.env.S3_SECRET_KEY,
+                  process.env.S3_BUCKET
                 );
 
 // var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
